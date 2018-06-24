@@ -1,26 +1,23 @@
-public class Test {
+public abstract class Test {
+    private static StringBuilder resu = new StringBuilder();
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
 
-        int arr[] = {12, 5, 787, 1, 23};
-        int top = 2;
-        int max = 0;
+        System.out.println(canAssign(Object.class));
 
-        for (int i = 0; i < top; i++) {
-            int x = 0;
-            for (int j = 1; j < arr.length; j++) {
-                if (arr[x] < arr[j]) {
-                    x = j;
-                }
-            }
-            System.out.println(arr[x]);
-            arr[x] = Integer.MIN_VALUE;
-        }
-    }
-
-    private static void m() {
-        System.out.println("wtf");
+//        System.out.println(conv(10));
     }
 
 
+    private static String conv(int no) {
+        if (no <= 0) return "0";
+        int s = no % 2;
+        conv(no / 2);
+        return resu.append(s).toString();
+
+    }
+
+    private static boolean canAssign(Class clazz) {
+        return Test.class.isAssignableFrom(clazz);
+    }
 }
