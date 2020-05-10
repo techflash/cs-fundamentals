@@ -1,7 +1,5 @@
 package ll;
 
-import org.omg.PortableInterceptor.INACTIVE;
-
 public class LinkList<T> {
 
   private Node<T> head;

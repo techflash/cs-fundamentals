@@ -1,9 +1,9 @@
 package basics;
 
-import javax.naming.ServiceUnavailableException;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import javax.naming.ServiceUnavailableException;
 
 public final class MessageReProcessorUtil {
   public static void main(String[] args) {
