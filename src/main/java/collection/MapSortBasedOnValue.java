@@ -1,6 +1,9 @@
 package collection;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class MapSortBasedOnValue {
     public static void main(String[] args) {
