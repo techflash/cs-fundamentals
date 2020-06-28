@@ -1,6 +1,14 @@
 package refactoring.model;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+
+@Getter
+@Setter
+@Accessors(chain = true)
 public class FootballPlayer {
+
   private double passerRating;
   private int rushingYards;
   private int receivingYards;
@@ -11,75 +19,14 @@ public class FootballPlayer {
   private int avgKickoffReturn;
   private int avgPuntReturn;
 
-  public double getPasserRating() {
-    return passerRating;
+  // Constructors cant have same no of arguments having same type hence following two method
+  // solve that particular problem
+  public static FootballPlayer createRushingPlayer(int rushingYards) {
+    return new FootballPlayer().setRushingYards(rushingYards);
   }
 
-  public void setPasserRating(double passerRating) {
-    this.passerRating = passerRating;
+  public static FootballPlayer createReceivingPlayer(int receivingYards) {
+    return new FootballPlayer().setReceivingYards(receivingYards);
   }
 
-  public int getRushingYards() {
-    return rushingYards;
-  }
-
-  public void setRushingYards(int rushingYards) {
-    this.rushingYards = rushingYards;
-  }
-
-  public int getReceivingYards() {
-    return receivingYards;
-  }
-
-  public void setReceivingYards(int receivingYards) {
-    this.receivingYards = receivingYards;
-  }
-
-  public int getTotalTackles() {
-    return totalTackles;
-  }
-
-  public void setTotalTackles(int totalTackles) {
-    this.totalTackles = totalTackles;
-  }
-
-  public int getInterceptions() {
-    return interceptions;
-  }
-
-  public void setInterceptions(int interceptions) {
-    this.interceptions = interceptions;
-  }
-
-  public int getFieldGoals() {
-    return fieldGoals;
-  }
-
-  public void setFieldGoals(int fieldGoals) {
-    this.fieldGoals = fieldGoals;
-  }
-
-  public int getAvgPunt() {
-    return avgPunt;
-  }
-
-  public void setAvgPunt(int avgPunt) {
-    this.avgPunt = avgPunt;
-  }
-
-  public int getAvgKickoffReturn() {
-    return avgKickoffReturn;
-  }
-
-  public void setAvgKickoffReturn(int avgKickoffReturn) {
-    this.avgKickoffReturn = avgKickoffReturn;
-  }
-
-  public int getAvgPuntReturn() {
-    return avgPuntReturn;
-  }
-
-  public void setAvgPuntReturn(int avgPuntReturn) {
-    this.avgPuntReturn = avgPuntReturn;
-  }
 }
