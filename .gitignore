@@ -1,4 +1,5 @@
 target/*
 javabasic.iml
-.idea
-.gradle
+.idea/**
+.gradle/**
+build/*
