@@ -78,7 +78,7 @@ public class LinkList<T> {
   }
 
   public void reverse() {
-    Node<T> current = head, prev = null, next = null;
+    Node<T> current = head, prev = null, next;
     if (head == null || head.next == null) {
       return;
     }
