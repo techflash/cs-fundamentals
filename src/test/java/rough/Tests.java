@@ -2,10 +2,16 @@ package rough;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.BiPredicate;
 import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -18,13 +24,18 @@ public class Tests {
   public void testLambdas() {
     int x = 1;
     BooleanSupplier shouldPush = () -> x == 1;
-    System.out.println(shouldPush.getAsBoolean());
+//    System.out.println(shouldPush.getAsBoolean());
 
     Function<Integer, String> concept = (input) -> input + "1";
 
     String result = concept.apply(10);
-    System.out.println(result);
+//    System.out.println(result);
 
+    BiPredicate<Integer, Boolean> shouldFuck = (age, isHot) -> age > 18 && isHot;
+    shouldFuck = shouldFuck.and((hour, inMood) -> hour > 20 && inMood)
+        .and((hoursWorked, workCompleted) -> workCompleted);
+
+    System.out.println("Should I fuck: " + (shouldFuck.test(20, true) ? "Yeah" : "Nope"));
   }
 
   enum Switch {
@@ -89,8 +100,9 @@ public class Tests {
   }
 
   @Test
-  public void flatMap(){
+  public void flatMap() {
     class Add {
+
       public String streetName;
       public String city;
 
@@ -108,6 +120,7 @@ public class Tests {
       }
     }
     class Emp {
+
       String name;
       List<Add> addresses;
 
@@ -118,7 +131,9 @@ public class Tests {
     }
 
     class Dept {
+
       List<Emp> emp;
+
       public Dept(List<Emp> emp) {
         this.emp = emp;
       }
@@ -129,12 +144,12 @@ public class Tests {
             Arrays.asList(
                 new Add("Leibniz", "Berlin"),
                 new Add("Bismark", "Berlin"))
-            ),
+        ),
         new Emp("xyz",
             Arrays.asList(
                 new Add("abc", "Berlin"),
                 new Add("exy", "Berlin"))
-            )
+        )
 
     ));
 
@@ -148,10 +163,58 @@ public class Tests {
 
   @Test
   public void removeAll() {
-    char [] x = {'l'};
     List<String> list = new ArrayList<>();
     list.add("1");
-    list.removeAll(Arrays.asList("1", "2"));
+    list.retainAll(Arrays.asList("1", "2"));
     System.out.println(list);
+  }
+
+  @Test
+  public void streamTest() {
+    List<String> a = new ArrayList<>();
+    a.add("1");
+    a.add("2");
+    a.add("4");
+    List<String> b = new ArrayList<>();
+    b.add("3");
+    b.add("2");
+
+    List<String> joinedList = Arrays.asList(a, b, null)
+        .stream()
+        .flatMap(x -> Optional.ofNullable(x).orElse(Collections.emptyList()).stream())
+        .collect(Collectors.toUnmodifiableList());
+
+    System.out.println(joinedList);
+
+  }
+
+
+  @Test
+  public void test(){
+    System.out.println("2367479f-68e3-4975-b2c0-20fd65a185b0.80d8c41a-a538-4138-bced-cce2f24e57a4".split("\\.")[1]);
+  }
+
+
+  @Test
+  public void testDate() throws ParseException {
+    DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy:HH:mm:ss Z");
+    OffsetDateTime projectStartDate1 = OffsetDateTime.parse("24-02-2021:05:16:03 -0100", DATE_FORMAT);
+//    System.out.println(Date.from(LocalTime.MAX.atDate(projectStartDate1.toLocalDate()).atZone(
+//        ZoneId.systemDefault()).toInstant()).toString());
+
+    System.out.println(LocalTime.MAX.atDate(projectStartDate1.toLocalDate()));
+    System.out.println(projectStartDate1.toLocalDate().atStartOfDay());
+  }
+
+
+//  public OffsetDateTime date(String shortDateAsString){
+//    DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy:HH:mm:ss Z");
+//    return shortDateAsString==null? null :
+//  }
+
+  @Test
+  public void testStuff() {
+    long limit = 10l;
+    System.out.println((int) limit);
   }
 }
