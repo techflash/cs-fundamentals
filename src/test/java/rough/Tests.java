@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.BiPredicate;
 import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
@@ -19,6 +20,44 @@ import java.util.stream.Collectors;
 import org.junit.Test;
 
 public class Tests {
+
+  private boolean myConditions;
+  List<Employee> employees = null;
+
+  private class Employee {
+
+    private Integer id;
+    private List<Integer> reportsTo;
+
+    public Employee(Integer id, List<Integer> reportsTo) {
+      this.id = id;
+      this.reportsTo = reportsTo;
+    }
+
+    public Integer getId() {
+      return id;
+    }
+
+    public void setId(Integer id) {
+      this.id = id;
+    }
+
+    public List<Integer> getReportsTo() {
+      return reportsTo;
+    }
+
+    public void setReportsTo(List<Integer> reportsTo) {
+      this.reportsTo = reportsTo;
+    }
+
+    @Override
+    public String toString() {
+      return "Employee{" +
+          "id=" + id +
+          ", reportsTo=" + reportsTo +
+          '}';
+    }
+  }
 
   @Test
   public void testLambdas() {
@@ -45,13 +84,11 @@ public class Tests {
 
   @Test
   public void someTest() {
-
-    List<Integer> items = Arrays.asList(10, 20, 30)
-        .stream()
-        .filter(i -> i > 10)
-        .collect(Collectors.toList());
-    System.out.println(items);
-    System.out.println(items.size());
+    if (null == Switch.ON) {
+      System.out.println("on");
+    } else {
+      System.out.println("off");
+    }
   }
 
   @Test
@@ -190,22 +227,23 @@ public class Tests {
 
 
   @Test
-  public void test(){
-    System.out.println("2367479f-68e3-4975-b2c0-20fd65a185b0.80d8c41a-a538-4138-bced-cce2f24e57a4".split("\\.")[1]);
+  public void test() {
+    System.out.println("2367479f-68e3-4975-b2c0-20fd65a185b0.80d8c41a-a538-4138-bced-cce2f24e57a4"
+        .split("\\.")[1]);
   }
 
 
   @Test
   public void testDate() throws ParseException {
     DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy:HH:mm:ss Z");
-    OffsetDateTime projectStartDate1 = OffsetDateTime.parse("24-02-2021:05:16:03 -0100", DATE_FORMAT);
+    OffsetDateTime projectStartDate1 = OffsetDateTime
+        .parse("24-02-2021:05:16:03 -0100", DATE_FORMAT);
 //    System.out.println(Date.from(LocalTime.MAX.atDate(projectStartDate1.toLocalDate()).atZone(
 //        ZoneId.systemDefault()).toInstant()).toString());
 
     System.out.println(LocalTime.MAX.atDate(projectStartDate1.toLocalDate()));
     System.out.println(projectStartDate1.toLocalDate().atStartOfDay());
   }
-
 
 //  public OffsetDateTime date(String shortDateAsString){
 //    DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy:HH:mm:ss Z");
@@ -214,7 +252,34 @@ public class Tests {
 
   @Test
   public void testStuff() {
-    long limit = 10l;
-    System.out.println((int) limit);
+
+    Employee manager1 = new Employee(1, Collections.emptyList());
+    Employee manager2 = new Employee(2, Collections.emptyList());
+    Employee lead1 = new Employee(3, new ArrayList<>());
+    Employee lead2 = new Employee(6, new ArrayList<>());
+    lead2.getReportsTo().add(lead1.getId());
+    lead1.getReportsTo().add(lead2.getId());
+    Employee employee1 = new Employee(4, Arrays.asList(lead1.getId()));
+    Employee employee2 = new Employee(5, Arrays.asList(lead2.getId(), lead1.getId()));
+
+//    employees = Arrays.asList(manager1, manager2, lead1, lead2, employee1, employee2);
+//
+//    Set<Employee> subordinates = new HashSet<>();
+//    findAllSubordinates(subordinates, lead1);
+//
+//    System.out.println("Subordinates:" + subordinates);
+
+    System.out.println(
+        new ArrayList<Employee>().stream().allMatch(
+            employee -> employee.getReportsTo() != null && employee.getReportsTo().size() > 0));
+  }
+
+  private void findAllSubordinates(Set<Employee> subs, Employee superior) {
+    employees.forEach(employee -> {
+      if (employee.getReportsTo().contains(superior.getId())) {
+        subs.add(employee);
+        findAllSubordinates(subs, employee);
+      }
+    });
   }
 }

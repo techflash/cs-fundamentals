@@ -1,5 +1,6 @@
 package tree;
 
+import java.util.List;
 import org.junit.Test;
 
 public class TreeTest {
@@ -12,7 +13,11 @@ public class TreeTest {
     bTree.add(12);
     bTree.add(9);
 
-    bTree.print();
+    System.out.println("Printing tree elements with print method");
+    List<Node> elements = bTree.print();
+
+    System.out.println("Printing tree elements with list");
+    elements.forEach(e -> System.out.println(e.data));
   }
 
 }

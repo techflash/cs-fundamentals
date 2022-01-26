@@ -1,5 +1,8 @@
 package tree;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BTree {
 
   private Node root;
@@ -12,9 +15,9 @@ public class BTree {
     if (root == null) {
       root = newNode(data);
     } else if (data > root.data) {
-      root.right = (add(data, root.right));
+      root.right = add(data, root.right);
     } else {
-      return root.left = add(data, root.left);
+      root.left = add(data, root.left);
     }
     return root;
   }
@@ -27,19 +30,24 @@ public class BTree {
 
   }
 
-  public void print() {
-    print(root);
+  public List<Node> print() {
+    List<Node> elements = new ArrayList<>();
+    print(root, elements);
+    return elements;
   }
 
-  private void print(Node root) {
+  private void print(Node root, List<Node> elements) {
     if (root == null) {
       return;
-    } else if (root.left != null) {
-      print(root.left);
-    } else if (root.right != null) {
-      print(root.right);
+    }
+    if (root.left != null) {
+      print(root.left, elements);
     }
 
+    if (root.right != null) {
+      print(root.right, elements);
+    }
+    elements.add(root);
     System.out.println(root.data);
   }
 }
