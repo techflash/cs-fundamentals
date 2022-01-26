@@ -1,6 +1,7 @@
 package general;
 
 import java.util.Objects;
+import java.util.Optional;
 import org.junit.Test;
 import org.modelmapper.ModelMapper;
 
@@ -87,4 +88,9 @@ public class ClassesAndObjects {
     System.out.println("");
   }
 
+  @Test
+  public void testOptional() {
+    Object o = new Object();
+    System.out.println(Optional.ofNullable(o).map(x -> "yes").orElse("no"));
+  }
 }
