@@ -25,7 +25,7 @@ dependencies {
 
 }
 
-group = 'javabasic'
+group = 'cs-fundamentals'
 version = '1.0-SNAPSHOT'
 sourceCompatibility = '11'
 
